@@ -6,14 +6,14 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
-#define SERVER_ADDRESS "127.0.0.1" // Адрес сервера
-#define SERVER_PORT 12345          // Порт сервера
-#define BUFFER_SIZE 1024           // Размер буфера для получения данных
+#define SERVER_ADDRESS "127.0.0.1" // РђРґСЂРµСЃ СЃРµСЂРІРµСЂР°
+#define SERVER_PORT 12345          // РџРѕСЂС‚ СЃРµСЂРІРµСЂР°
+#define BUFFER_SIZE 1024           // Р Р°Р·РјРµСЂ Р±СѓС„РµСЂР° РґР»СЏ РїРµСЂРµРґР°С‡Рё РґР°РЅРЅС‹С…
 
 int socket_fd;
 std::ofstream output_file;
 
-// Обработчик сигналов
+// РћР±СЂР°Р±РѕС‚С‡РёРє СЃРёРіРЅР°Р»РѕРІ
 void signal_handler(int signum)
 {
     if (signum == SIGTERM || signum == SIGHUP)
@@ -27,7 +27,7 @@ void signal_handler(int signum)
 
 int main()
 {
-    // Настройка обработчика сигналов
+     // РќР°СЃС‚СЂРѕР№РєР° РѕР±СЂР°Р±РѕС‚С‡РёРєР° СЃРёРіРЅР°Р»РѕРІ
     struct sigaction action;
     action.sa_handler = signal_handler;
     sigemptyset(&action.sa_mask);
@@ -35,7 +35,7 @@ int main()
     sigaction(SIGTERM, &action, NULL);
     sigaction(SIGHUP, &action, NULL);
 
-    // Создание сокета
+     // РЎРѕР·РґР°РЅРёРµ СЃРѕРєРµС‚Р°
     socket_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (socket_fd == -1)
     {
@@ -43,7 +43,7 @@ int main()
         return 1;
     }
 
-    // Настройка адреса сервера и привязка к сокету
+    // РќР°СЃС‚СЂРѕР№РєР° Р°РґСЂРµСЃР° СЃРµСЂРІРµСЂР° Рё РїСЂРёРІСЏР·РєР° Рє СЃРѕРєРµС‚Сѓ
     struct sockaddr_in server_address;
     server_address.sin_family = AF_INET;
     server_address.sin_addr.s_addr = inet_addr(SERVER_ADDRESS);
@@ -55,7 +55,7 @@ int main()
         return 1;
     }
 
-    // Прослушивание сокета
+     // РџСЂРѕСЃР»СѓС€РёРІР°РЅРёРµ СЃРѕРєРµС‚Р°
     if (listen(socket_fd, 1) < 0)
     {
         std::cerr << "Error: cannot listen on socket\n";
@@ -64,7 +64,7 @@ int main()
 
     std::cout << "Server started, listening on port " << SERVER_PORT << "\n";
 
-    // Ожидание подключений
+   // РћР¶РёРґР°РЅРёРµ РїРѕРґРєР»СЋС‡РµРЅРёР№
     struct sockaddr_in client_address;
     int client_address_size = sizeof(client_address);
     int client_fd = accept(socket_fd, (struct sockaddr*)&client_address, (socklen_t*)&client_address_size);
@@ -76,7 +76,7 @@ int main()
 
     std::cout << "Client connected, receiving data...\n";
 
-    // Получение данных
+    // РџРѕР»СѓС‡РµРЅРёРµ РґР°РЅРЅС‹С…
     char buffer[BUFFER_SIZE];
     int bytes_received;
     
