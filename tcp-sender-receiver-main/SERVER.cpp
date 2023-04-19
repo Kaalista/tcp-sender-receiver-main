@@ -8,7 +8,7 @@
 
 #define SERVER_ADDRESS "127.0.0.1" // Адрес сервера
 #define SERVER_PORT 12345          // Порт сервера
-#define BUFFER_SIZE 1024           // Размер буфера для передачи данных
+#define BUFFER_SIZE 1024           // Размер буфера для получения данных
 
 int socket_fd;
 std::ofstream output_file;
@@ -27,7 +27,7 @@ void signal_handler(int signum)
 
 int main()
 {
-     // Настройка обработчика сигналов
+    // Настройка обработчика сигналов
     struct sigaction action;
     action.sa_handler = signal_handler;
     sigemptyset(&action.sa_mask);
@@ -35,7 +35,7 @@ int main()
     sigaction(SIGTERM, &action, NULL);
     sigaction(SIGHUP, &action, NULL);
 
-     // Создание сокета
+    // Создание сокета
     socket_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (socket_fd == -1)
     {
@@ -55,7 +55,7 @@ int main()
         return 1;
     }
 
-     // Прослушивание сокета
+    // Прослушивание сокета
     if (listen(socket_fd, 1) < 0)
     {
         std::cerr << "Error: cannot listen on socket\n";
@@ -64,7 +64,7 @@ int main()
 
     std::cout << "Server started, listening on port " << SERVER_PORT << "\n";
 
-   // Ожидание подключений
+    // Ожидание подключений
     struct sockaddr_in client_address;
     int client_address_size = sizeof(client_address);
     int client_fd = accept(socket_fd, (struct sockaddr*)&client_address, (socklen_t*)&client_address_size);
@@ -79,5 +79,4 @@ int main()
     // Получение данных
     char buffer[BUFFER_SIZE];
     int bytes_received;
-    
     output_file.open("received_data.txt", std::ios_base::open_mode _Mode);
